@@ -27,6 +27,10 @@ namespace OCR.NET_TEST.Services
 
             var result = baiduOcrService.vatInvoice(tokenModel.Access_Token, filePath);
 
+            Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(result);
+
+            
+
             return result;
         }
 
