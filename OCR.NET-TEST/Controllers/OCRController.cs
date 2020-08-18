@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OCR.NET_TEST.Models;
 using OCR.NET_TEST.Services;
 
 namespace OCR.NET_TEST.Controllers
@@ -18,10 +19,10 @@ namespace OCR.NET_TEST.Controllers
         }
 
         // GET: OCR
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var result = ocrService.getToken();
-            return View("View");
+            var result = await ocrService.GetInvoice();
+            return View("View", result);
         }
 
         // GET: OCR/Details/5

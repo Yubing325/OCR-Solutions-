@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OCR.NET_TEST.Models;
 using System;
@@ -11,15 +12,20 @@ namespace OCR.NET_TEST.Services
 {
     public class OCRService
     {
-        
-        public OCRService()
+        private readonly IConfiguration configuration;
+        public static long COUNT = 0;
+
+        public OCRService(IConfiguration configuration)
         {
-            
+            this.configuration = configuration;
         }
 
-        public string getToken()
+        public async Task<Root> GetInvoice()
         {
-            var token = BaiduAccessToken.getAccessToken();            
+            var clientId = configuration["Baidu:clientId"];
+            var secret= configuration["Baidu:clientSecret"];
+
+            var token = BaiduAccessToken.getAccessToken(clientId, secret);            
 
             var tokenModel = JsonConvert.DeserializeObject<ResultToken>(token);
 
@@ -29,11 +35,16 @@ namespace OCR.NET_TEST.Services
 
             Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(result);
 
-            
+            myDeserializedClass = caculateRequestCount(myDeserializedClass);
 
-            return result;
+            return myDeserializedClass;
         }
 
-
+        private Root caculateRequestCount(Root model)
+        {
+            COUNT++;
+            model.RequestedCount = COUNT;
+            return model;
+        }
     }
 }

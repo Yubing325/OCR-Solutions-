@@ -12,6 +12,7 @@ namespace OCR.NET_TEST.Models
         public WordsResult words_result { get; set; }
         public long log_id { get; set; }
         public int words_result_num { get; set; }
+        public long RequestedCount{ get; set; }
     }
 
     public class CommodityTaxRate

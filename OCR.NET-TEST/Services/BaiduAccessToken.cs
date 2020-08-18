@@ -7,16 +7,7 @@ namespace OCR.NET_TEST.Services
 {
     public static class BaiduAccessToken
     {
-		// 调用getAccessToken()获取的 access_token建议根据expires_in 时间 设置缓存
-		// 返回token示例
-		public static String TOKEN = "24.adda70c11b9786206253ddb70affdc46.2592000.1493524354.282335-1234567";
-
-		// 百度云中开通对应服务应用的 API Key 建议开通应用的时候多选服务
-		private static String clientId = "1tFLGzbv2jax4u2aNEAGjGWo";
-		// 百度云中开通对应服务应用的 Secret Key
-		private static String clientSecret = "2d37OMGbyxqbFqIbSYZ9iZ7LyV79YTXX";
-
-		public static String getAccessToken()
+		public static String getAccessToken(string clientId, string clientSecret)
 		{
 			String authHost = "https://aip.baidubce.com/oauth/2.0/token";
 			HttpClient client = new HttpClient();
