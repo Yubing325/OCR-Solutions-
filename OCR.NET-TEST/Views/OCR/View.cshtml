@@ -3,7 +3,11 @@
     ViewData["Title"] = "Root";
 }
 
-    <h1>已识别 @Model.words_result.SellerName 的 @Model.words_result.InvoiceTypeOrg </h1>
+    
+
+
+
+<h1>已识别 @Model.words_result.SellerName 的 @Model.words_result.InvoiceTypeOrg </h1>
 
 
 
@@ -107,8 +111,13 @@
         </tr>
         <tr>
             <th scope="row">20</th>
-            <td>复核</td>
-            <td>@Model.words_result.Checker</td>
+            <td>货物名称：</td>
+            <td>
+            @if(Model.words_result.CommodityName != null)
+                foreach (var item in @Model.words_result.CommodityName)
+                {
+                <span>@item.word</span>
+                }</td>
         </tr>
         <tr>
             <th scope="row">21</th>
@@ -119,6 +128,11 @@
             <th scope="row">22</th>
             <td>备注</td>
             <td>@Model.words_result.Remarks</td>
+        </tr>
+        <tr>
+            <th scope="row">23</th>
+            <td>复核</td>
+            <td>@Model.words_result.Checker</td>
         </tr>
     </tbody>
 </table>
