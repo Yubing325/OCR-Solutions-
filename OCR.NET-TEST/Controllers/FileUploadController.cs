@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OCR.NET_TEST.ViewModels;
 
 namespace OCR.NET_TEST.Controllers
 {
@@ -54,6 +55,17 @@ namespace OCR.NET_TEST.Controllers
             // Don't rely on or trust the FileName property without validation.
 
             return Ok(new { count = files.Count, size, filePaths });
+        }
+
+        [HttpPost]
+        public IActionResult Upload(FileModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                
+            }
+
+            return null;
         }
 
         // GET: FileUpload/Edit/5
