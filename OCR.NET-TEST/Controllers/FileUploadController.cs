@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OCR.NET_TEST.ViewModels;
@@ -11,6 +12,13 @@ namespace OCR.NET_TEST.Controllers
 {
     public class FileUploadController : Controller
     {
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        public FileUploadController(IWebHostEnvironment webHostEnvironment)
+        {
+            this.webHostEnvironment = webHostEnvironment;
+        }
+
         // GET: FileUpload
         public ActionResult Index()
         {
@@ -62,10 +70,23 @@ namespace OCR.NET_TEST.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                string uniqueFileName = null;
+                if(model.File != null)
+                {
+                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
+
+                    string filePath = Path.Combine(uploadFolder, uniqueFileName);
+
+                    model.File.CopyToAsync(new FileStream(filePath, FileMode.Create));
+
+                }
+
+
             }
 
-            return null;
+            return View();
         }
 
         // GET: FileUpload/Edit/5
