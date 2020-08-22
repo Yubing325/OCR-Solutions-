@@ -1,140 +1,143 @@
-﻿@model Root
+﻿@model List<Root>
 @{
     ViewData["Title"] = "Root";
 }
 
-    
+
+
+@foreach (var root in Model)
+{
+    <h1>已识别 @root.words_result.SellerName 的 @root.words_result.InvoiceTypeOrg </h1>
 
 
 
-<h1>已识别 @Model.words_result.SellerName 的 @Model.words_result.InvoiceTypeOrg </h1>
+    <table class="table table-bordered table-striped table-hover">
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>发票种类</td>
+                <td>@root.words_result.InvoiceType</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>发票名称</td>
+                <td>@root.words_result.InvoiceTypeOrg</td>
 
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>发票代码</td>
+                <td>@root.words_result.InvoiceCode</td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td>发票号码</td>
+                <td>@root.words_result.InvoiceNum</td>
+            </tr>
+            <tr>
+                <th scope="row">5</th>
+                <td>校验码</td>
+                <td>@root.words_result.CheckCode</td>
+            </tr>
+            <tr>
+                <th scope="row">6</th>
+                <td>开票日期</td>
+                <td>@root.words_result.InvoiceDate</td>
+            </tr>
+            <tr>
+                <th scope="row">7</th>
+                <td>购方名称</td>
+                <td>@root.words_result.PurchaserName</td>
+            </tr>
+            <tr>
+                <th scope="row">8</th>
+                <td>购方纳税人识别号</td>
+                <td>@root.words_result.PurchaserRegisterNum</td>
+            </tr>
+            <tr>
+                <th scope="row">9</th>
+                <td>购方地址及电话</td>
+                <td>@root.words_result.PurchaserAddress</td>
+            </tr>
+            <tr>
+                <th scope="row">10</th>
+                <td>购方开户行及账号</td>
+                <td>@root.words_result.PurchaserBank</td>
+            </tr>
+            <tr>
+                <th scope="row">11</th>
+                <td>销售方名称</td>
+                <td>@root.words_result.SellerName</td>
+            </tr>
+            <tr>
+                <th scope="row">12</th>
+                <td>销售方纳税人识别号</td>
+                <td>@root.words_result.SellerRegisterNum</td>
+            </tr>
+            <tr>
+                <th scope="row">13</th>
+                <td>销售方地址及电话</td>
+                <td>@root.words_result.SellerAddress</td>
+            </tr>
+            <tr>
+                <th scope="row">14</th>
+                <td>销售方开户行及账号</td>
+                <td>@root.words_result.SellerBank</td>
+            </tr>
+            <tr>
+                <th scope="row">15</th>
+                <td>合计金额</td>
+                <td>@root.words_result.TotalAmount</td>
+            </tr>
+            <tr>
+                <th scope="row">16</th>
+                <td>合计税额</td>
+                <td>@root.words_result.TotalTax</td>
+            </tr>
+            <tr>
+                <th scope="row">17</th>
+                <td>价税合计(大写)</td>
+                <td>@root.words_result.AmountInWords</td>
+            </tr>
+            <tr>
+                <th scope="row">18</th>
+                <td>价税合计(小写)</td>
+                <td>@root.words_result.AmountInFiguers</td>
+            </tr>
+            <tr>
+                <th scope="row">19</th>
+                <td>收款人</td>
+                <td>@root.words_result.Payee</td>
+            </tr>
+            <tr>
+                <th scope="row">20</th>
+                <td>货物名称：</td>
+                <td>
+                    @if (root.words_result.CommodityName != null)
+                        foreach (var item in root.words_result.CommodityName)
+                        {
+                            <span>@item.word</span>
+                        }
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">21</th>
+                <td>开票人</td>
+                <td>@root.words_result.NoteDrawer</td>
+            </tr>
+            <tr>
+                <th scope="row">22</th>
+                <td>备注</td>
+                <td>@root.words_result.Remarks</td>
+            </tr>
+            <tr>
+                <th scope="row">23</th>
+                <td>复核</td>
+                <td>@root.words_result.Checker</td>
+            </tr>
+        </tbody>
+    </table>
 
+    <p>今日已请求次数： @root.RequestedCount, 免费请求剩余@(500 - root.RequestedCount)次</p>
+}
 
-<table class="table table-bordered table-striped table-hover">
-    <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>发票种类</td>
-            <td>@Model.words_result.InvoiceType</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>发票名称</td>
-            <td>@Model.words_result.InvoiceTypeOrg</td>
-
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>发票代码</td>
-            <td>@Model.words_result.InvoiceCode</td>
-        </tr>
-        <tr>
-            <th scope="row">4</th>
-            <td>发票号码</td>
-            <td>@Model.words_result.InvoiceNum</td>
-        </tr>
-        <tr>
-            <th scope="row">5</th>
-            <td>校验码</td>
-            <td>@Model.words_result.CheckCode</td>
-        </tr>
-        <tr>
-            <th scope="row">6</th>
-            <td>开票日期</td>
-            <td>@Model.words_result.InvoiceDate</td>
-        </tr>
-        <tr>
-            <th scope="row">7</th>
-            <td>购方名称</td>
-            <td>@Model.words_result.PurchaserName</td>
-        </tr>
-        <tr>
-            <th scope="row">8</th>
-            <td>购方纳税人识别号</td>
-            <td>@Model.words_result.PurchaserRegisterNum</td>
-        </tr>
-        <tr>
-            <th scope="row">9</th>
-            <td>购方地址及电话</td>
-            <td>@Model.words_result.PurchaserAddress</td>
-        </tr>
-        <tr>
-            <th scope="row">10</th>
-            <td>购方开户行及账号</td>
-            <td>@Model.words_result.PurchaserBank</td>
-        </tr>
-        <tr>
-            <th scope="row">11</th>
-            <td>销售方名称</td>
-            <td>@Model.words_result.SellerName</td>
-        </tr>
-        <tr>
-            <th scope="row">12</th>
-            <td>销售方纳税人识别号</td>
-            <td>@Model.words_result.SellerRegisterNum</td>
-        </tr>
-        <tr>
-            <th scope="row">13</th>
-            <td>销售方地址及电话</td>
-            <td>@Model.words_result.SellerAddress</td>
-        </tr>
-        <tr>
-            <th scope="row">14</th>
-            <td>销售方开户行及账号</td>
-            <td>@Model.words_result.SellerBank</td>
-        </tr>
-        <tr>
-            <th scope="row">15</th>
-            <td>合计金额</td>
-            <td>@Model.words_result.TotalAmount</td>
-        </tr>
-        <tr>
-            <th scope="row">16</th>
-            <td>合计税额</td>
-            <td>@Model.words_result.TotalTax</td>
-        </tr>
-        <tr>
-            <th scope="row">17</th>
-            <td>价税合计(大写)</td>
-            <td>@Model.words_result.AmountInWords</td>
-        </tr>
-        <tr>
-            <th scope="row">18</th>
-            <td>价税合计(小写)</td>
-            <td>@Model.words_result.AmountInFiguers</td>
-        </tr>
-        <tr>
-            <th scope="row">19</th>
-            <td>收款人</td>
-            <td>@Model.words_result.Payee</td>
-        </tr>
-        <tr>
-            <th scope="row">20</th>
-            <td>货物名称：</td>
-            <td>
-            @if(Model.words_result.CommodityName != null)
-                foreach (var item in @Model.words_result.CommodityName)
-                {
-                <span>@item.word</span>
-                }</td>
-        </tr>
-        <tr>
-            <th scope="row">21</th>
-            <td>开票人</td>
-            <td>@Model.words_result.NoteDrawer</td>
-        </tr>
-        <tr>
-            <th scope="row">22</th>
-            <td>备注</td>
-            <td>@Model.words_result.Remarks</td>
-        </tr>
-        <tr>
-            <th scope="row">23</th>
-            <td>复核</td>
-            <td>@Model.words_result.Checker</td>
-        </tr>
-    </tbody>
-</table>
-
-今日已请求次数： @Model.RequestedCount, 免费请求剩余@(500-@Model.RequestedCount)次:

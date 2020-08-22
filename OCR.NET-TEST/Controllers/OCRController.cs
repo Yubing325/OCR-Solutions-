@@ -42,7 +42,7 @@ namespace OCR.NET_TEST.Controllers
         public async Task<IActionResult> Upload(FileModel model)
         {
 
-            Root result = new Root();
+            List<Root> result = new List<Root>();
 
             if (ModelState.IsValid)
             {

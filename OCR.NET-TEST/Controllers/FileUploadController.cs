@@ -65,29 +65,29 @@ namespace OCR.NET_TEST.Controllers
             return Ok(new { count = files.Count, size, filePaths });
         }
 
-        [HttpPost]
-        public IActionResult Upload(FileModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                string uniqueFileName = null;
-                if(model.File != null)
-                {
-                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+        //[HttpPost]
+        //public IActionResult Upload(FileModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        string uniqueFileName = null;
+        //        if(model.Files != null)
+        //        {
+        //            string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
 
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
+        //            uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Files.FileName;
 
-                    string filePath = Path.Combine(uploadFolder, uniqueFileName);
+        //            string filePath = Path.Combine(uploadFolder, uniqueFileName);
 
-                    model.File.CopyToAsync(new FileStream(filePath, FileMode.Create));
+        //            model.Files.CopyToAsync(new FileStream(filePath, FileMode.Create));
 
-                }
+        //        }
 
 
-            }
+        //    }
 
-            return View();
-        }
+        //    return View();
+        //}
 
         // GET: FileUpload/Edit/5
         public ActionResult Edit(int id)

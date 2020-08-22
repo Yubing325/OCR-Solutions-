@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -25,7 +26,7 @@ namespace OCR.NET_TEST.Services
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public Task<Root> GetInvoice(FileModel model)
+        public Task<List<Root>> GetInvoice(FileModel model)
         {
             var clientId = configuration["Baidu:clientId"];
             var secret= configuration["Baidu:clientSecret"];
@@ -34,35 +35,41 @@ namespace OCR.NET_TEST.Services
 
             var tokenModel = JsonConvert.DeserializeObject<ResultToken>(token);
 
-            string filePath = GetFilePath(model);
+            var rootList = new List<Root>();
 
-            var result = baiduOcrService.vatInvoice(tokenModel.Access_Token, filePath);
+            foreach (var item in model.Files)
+            {
+                string filePath = GetFilePath(item);
 
-            Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(result);
+                var result = baiduOcrService.vatInvoice(tokenModel.Access_Token, filePath);
 
-            myDeserializedClass = caculateRequestCount(myDeserializedClass);
+                Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(result);
 
-            return Task.FromResult(myDeserializedClass);
+                myDeserializedClass = caculateRequestCount(myDeserializedClass);
+
+                rootList.Add(myDeserializedClass);
+            }
+
+            return Task.FromResult(rootList);
         }
 
-        public string GetFilePath(FileModel model)
+        public string GetFilePath(IFormFile model)
         {
-            if (model.File != null)
+            if (model != null)
             {
-                string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                
+                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
 
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(model.File.FileName);
-                string filePath = Path.Combine(uploadFolder, uniqueFileName);
-                //FileStream fs = new FileStream(filePath, FileMode.Create);
-                //model.File.CopyToAsync(fs);
-                //fs.Dispose();
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(model.FileName);
+                    string filePath = Path.Combine(uploadFolder, uniqueFileName);
 
-                using (FileStream fs = System.IO.File.Create(filePath))
-                {
-                    model.File.CopyTo(fs);
-                    fs.Flush();
-                }
-                return filePath;
+                    using (FileStream fs = System.IO.File.Create(filePath))
+                    {
+                        model.CopyTo(fs);
+                        fs.Flush();
+                    }
+                    return filePath;
+                
             }
 
             return null;

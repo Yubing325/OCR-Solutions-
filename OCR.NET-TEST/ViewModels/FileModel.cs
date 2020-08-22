@@ -8,6 +8,6 @@ namespace OCR.NET_TEST.ViewModels
 {
     public class FileModel
     {
-        public IFormFile File{ get; set; }
+        public List<IFormFile> Files{ get; set; }
     }
 }
