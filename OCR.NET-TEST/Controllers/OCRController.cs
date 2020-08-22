@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OCR.NET_TEST.Models;
 using OCR.NET_TEST.Services;
+using OCR.NET_TEST.ViewModels;
 
 namespace OCR.NET_TEST.Controllers
 {
@@ -21,8 +22,8 @@ namespace OCR.NET_TEST.Controllers
         // GET: OCR
         public async Task<IActionResult> Index()
         {
-            var result = await ocrService.GetInvoice();
-            return View("View", result);
+           // var result = await ocrService.GetInvoice();
+           return View();
         }
 
         // GET: OCR/Details/5
@@ -35,6 +36,21 @@ namespace OCR.NET_TEST.Controllers
         public ActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Upload(FileModel model)
+        {
+
+            Root result = new Root();
+
+            if (ModelState.IsValid)
+            {
+                result = await ocrService.GetInvoice(model);
+
+            }
+
+            return View("View", result);
         }
 
         // POST: OCR/Create
