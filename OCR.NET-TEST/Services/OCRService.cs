@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -29,9 +30,9 @@ namespace OCR.NET_TEST.Services
         public Task<List<Root>> GetInvoice(FileModel model)
         {
             var clientId = configuration["Baidu:clientId"];
-            var secret= configuration["Baidu:clientSecret"];
+            var secret = configuration["Baidu:clientSecret"];
 
-            var token = BaiduAccessToken.getAccessToken(clientId, secret);            
+            var token = BaiduAccessToken.getAccessToken(clientId, secret);
 
             var tokenModel = JsonConvert.DeserializeObject<ResultToken>(token);
 
@@ -45,7 +46,7 @@ namespace OCR.NET_TEST.Services
 
                 Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(result);
 
-                myDeserializedClass = caculateRequestCount(myDeserializedClass);
+                myDeserializedClass = CaculateRequestCount(myDeserializedClass);
 
                 rootList.Add(myDeserializedClass);
             }
@@ -57,29 +58,47 @@ namespace OCR.NET_TEST.Services
         {
             if (model != null)
             {
-                
-                    string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
 
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(model.FileName);
-                    string filePath = Path.Combine(uploadFolder, uniqueFileName);
+                string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
 
-                    using (FileStream fs = System.IO.File.Create(filePath))
-                    {
-                        model.CopyTo(fs);
-                        fs.Flush();
-                    }
-                    return filePath;
-                
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(model.FileName);
+                string filePath = Path.Combine(uploadFolder, uniqueFileName);
+
+                using (FileStream fs = System.IO.File.Create(filePath))
+                {
+                    model.CopyTo(fs);
+                    fs.Flush();
+                }
+                return filePath;
+
             }
 
             return null;
         }
-        
-        private Root caculateRequestCount(Root model)
+
+        private Root CaculateRequestCount(Root model)
         {
             COUNT++;
             model.RequestedCount = COUNT;
             return model;
         }
+
+        public StringBuilder ExportToCsv(List<Root> roots)
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine("type, name, commodity");
+            foreach (var root in roots)
+            {
+
+                sb.AppendLine($"{root.words_result.InvoiceType}, {root.words_result.InvoiceTypeOrg}");
+
+            }
+
+            return sb;
+        }
+            
+            
+
     }
 }

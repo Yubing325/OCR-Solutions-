@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ namespace OCR.NET_TEST.Controllers
     public class OCRController : Controller
     {
         private readonly OCRService ocrService;
+        private static List<Root> roots = new List<Root>();
 
         public OCRController(OCRService ocrService)
         {
@@ -50,7 +52,20 @@ namespace OCR.NET_TEST.Controllers
 
             }
 
+            roots = result;
+
             return View("View", result);
+        }
+
+        [HttpGet]
+        public IActionResult Export()
+        {
+            var builder =  ocrService.ExportToCsv(roots);
+            
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            
+
+            return File(Encoding.GetEncoding("GB2312").GetBytes(builder.ToString()), "text/csv", "invoices.csv");
         }
 
         // POST: OCR/Create
