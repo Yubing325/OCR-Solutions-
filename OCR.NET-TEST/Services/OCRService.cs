@@ -87,11 +87,14 @@ namespace OCR.NET_TEST.Services
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine("type, name, commodity");
+            sb.AppendLine("发票类型, 发票名称, 货物名称");
+
             foreach (var root in roots)
             {
+                var commodities = root.words_result.CommodityName.Select(t => t.word.ToString());
 
-                sb.AppendLine($"{root.words_result.InvoiceType}, {root.words_result.InvoiceTypeOrg}");
+                sb.AppendLine($"{root.words_result.InvoiceType}, {root.words_result.InvoiceTypeOrg}, {String.Join("," ,commodities)}," +
+                              $"{root.words_result.PurchaserName},{root.words_result.TotalAmount}");
 
             }
 
