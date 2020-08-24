@@ -62,10 +62,11 @@ namespace OCR.NET_TEST.Controllers
         {
             var builder =  ocrService.ExportToCsv(roots);
             
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            
+            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            return File(Encoding.GetEncoding("GB2312").GetBytes(builder.ToString()), "text/csv", "invoices.csv");
+
+            //return File(Encoding.GetEncoding("GB2312").GetBytes(builder.ToString()), "text/csv", "invoices.csv");
+            return File(new UTF8Encoding(true).GetBytes(builder.ToString()), "text/csv", "invoices.csv");
         }
 
         // POST: OCR/Create
