@@ -42,10 +42,10 @@ namespace OCR.NET_TEST.Models
     public class WordsResult
     {
         public string AmountInWords { get; set; }
-        public List<object> CommodityPrice { get; set; }
+        public List<CommodityAmount> CommodityPrice { get; set; }
         public string NoteDrawer { get; set; }
         public string SellerAddress { get; set; }
-        public List<object> CommodityNum { get; set; }
+        public List<CommodityAmount> CommodityNum { get; set; }
         public string SellerRegisterNum { get; set; }
         public string Remarks { get; set; }
         public string SellerBank { get; set; }
@@ -63,11 +63,11 @@ namespace OCR.NET_TEST.Models
         public string TotalAmount { get; set; }
         public List<CommodityAmount> CommodityAmount { get; set; }
         public string PurchaserName { get; set; }
-        public List<object> CommodityType { get; set; }
+        public List<CommodityAmount> CommodityType { get; set; }
         public string InvoiceType { get; set; }
         public string PurchaserAddress { get; set; }
         public List<CommodityTax> CommodityTax { get; set; }
-        public List<object> CommodityUnit { get; set; }
+        public List<CommodityTax> CommodityUnit { get; set; }
         public string Payee { get; set; }
         public List<CommodityName> CommodityName { get; set; }
         public string SellerName { get; set; }

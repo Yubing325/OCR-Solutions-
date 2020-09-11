@@ -110,6 +110,7 @@
                 <td>@root.words_result.Payee</td>
             </tr>
             @if (root.words_result.CommodityName != null)
+            {
                 foreach (var item in root.words_result.CommodityName)
                 {
                     <tr>
@@ -118,6 +119,40 @@
                         <td>@item.word</td>
                     </tr>
                 }
+            }
+            @if (root.words_result.CommodityPrice != null)
+            {
+                foreach (var item in root.words_result.CommodityPrice)
+                {
+                    <tr>
+                        <th scope="row">X</th>
+                        <td>货物单价：</td>
+                        <td>@item.word</td>
+                    </tr>
+                }
+            }
+            @if (root.words_result.CommodityNum != null)
+            {
+                foreach (var item in root.words_result.CommodityNum)
+                {
+                    <tr>
+                        <th scope="row">X</th>
+                        <td>货物数量：</td>
+                        <td>@item.word</td>
+                    </tr>
+                }
+            }
+            @if (root.words_result.CommodityAmount != null)
+            {
+                foreach (var item in root.words_result.CommodityAmount)
+                {
+                    <tr>
+                        <th scope="row">X</th>
+                        <td>货物金额：</td>
+                        <td>@item.word</td>
+                    </tr>
+                }
+            }
 
             <tr>
                 <th scope="row">21</th>
