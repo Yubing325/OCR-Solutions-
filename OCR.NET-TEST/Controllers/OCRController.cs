@@ -60,7 +60,10 @@ namespace OCR.NET_TEST.Controllers
         [HttpGet]
         public IActionResult Export()
         {
-            var builder =  ocrService.ExportToCsv(roots);
+
+            var invoices = ocrService.ModelTransform(roots);
+
+            var builder =  ocrService.ExportToCsv(invoices);
             
             //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 

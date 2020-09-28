@@ -39,6 +39,12 @@ namespace OCR.NET_TEST.Models
         public string word { get; set; }
     }
 
+    public class CommodityUnit
+    {
+        public string row { get; set; }
+        public string word { get; set; }
+    }
+
     public class WordsResult
     {
         public string AmountInWords { get; set; }
@@ -67,7 +73,7 @@ namespace OCR.NET_TEST.Models
         public string InvoiceType { get; set; }
         public string PurchaserAddress { get; set; }
         public List<CommodityTax> CommodityTax { get; set; }
-        public List<CommodityTax> CommodityUnit { get; set; }
+        public List<CommodityUnit> CommodityUnit { get; set; }
         public string Payee { get; set; }
         public List<CommodityName> CommodityName { get; set; }
         public string SellerName { get; set; }
